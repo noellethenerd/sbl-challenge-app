@@ -16,9 +16,8 @@ class Dedupe extends Component {
     this.props.sequences.map(seq => {
       uniqueSeq[seq] ? uniqueSeq[seq] += 1 : uniqueSeq[seq] = 1
     });
-    console.log('uniseq: ', uniqueSeq);
     return Object.keys(uniqueSeq).map(seq => {
-      return <div>{seq}: {uniqueSeq[seq]} Occurrences</div>
+      return <div>{seq}: {uniqueSeq[seq]} Occurrence(s)</div>
     })
   }
 
@@ -34,13 +33,28 @@ class Dedupe extends Component {
     return diff;
   }
 
+  findSeqWithThresh(threshold?) {
+    let uniqueSeq = {};
+    this.props.sequences.map(seq => {
+      if (uniqueSeq[seq]) {
+        uniqueSeq[seq] += 1;
+      }
+      else if (!uniqueSeq[seq] && Object.values(uniqueSeq).length != 0) {
+        (this.findBaseDifferences(seq, Object.keys(uniqueSeq)[0])).length <= threshold ? uniqueSeq[Object.keys(uniqueSeq)[0]] += 1: uniqueSeq[seq] = 1;
+    }
+      else uniqueSeq[seq] = 1;
+    })
+    return Object.keys(uniqueSeq).map(seq => {
+      return <div>{seq}: {uniqueSeq[seq]} Occurrence(s)</div>
+    })
+  }
+
   deduplicate(threshold?) {
     if (!threshold) {
       return this.findUniques() 
     }
     else {
-      console.log(this.findBaseDifferences('ACTGCTAGCTAGCT', 'ACTGCTAGCTAGCA'));
-      return (<div>Test</div>)
+      return this.findSeqWithThresh(threshold);
     }
 }
   
@@ -49,7 +63,7 @@ class Dedupe extends Component {
       <div className="Dedupe">
         Deduplication
         <div>
-          Sequences:
+          Raw Sequences:
             {this.displaySequences()}
         </div>
         <div>
@@ -57,8 +71,12 @@ class Dedupe extends Component {
             {this.deduplicate()}
         </div>
         <div>
-          Threshold 1:
+          Threshold of 1:
             {this.deduplicate(1)}
+        </div>
+        <div>
+          Threshold of 2:
+            {this.deduplicate(2)}
         <button>Click</button>
         </div>
     </div>
