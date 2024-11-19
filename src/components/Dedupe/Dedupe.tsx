@@ -4,7 +4,6 @@ import Accordion from "react-bootstrap/Accordion";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 
 class Dedupe extends Component<any, any> {
-
   displaySequences() {
     return this.props.sequences.map((element) => {
       return <div>{element}</div>;
