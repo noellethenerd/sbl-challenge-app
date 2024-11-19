@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
+import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
 
 class Dedupe extends Component {
 
@@ -62,23 +64,59 @@ class Dedupe extends Component {
     return (
       <div className="Dedupe">
         Deduplication
-        <div>
-          Raw Sequences:
-            {this.displaySequences()}
-        </div>
-        <div>
-          Unique Sequences:
-            {this.deduplicate()}
-        </div>
-        <div>
-          Threshold of 1:
-            {this.deduplicate(1)}
-        </div>
-        <div>
-          Threshold of 2:
-            {this.deduplicate(2)}
-        <button>Click</button>
-        </div>
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <AccordionHeader>
+              Raw Sequences:
+            </AccordionHeader>
+            <Accordion.Body>
+              <div style={{color: 'black'}}>
+                {this.displaySequences()}
+              </div>
+            </Accordion.Body>
+           </Accordion.Item>
+        </Accordion>
+
+
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <AccordionHeader>
+              Unique Sequences:
+            </AccordionHeader>
+            <Accordion.Body>
+              <div style={{color: 'black'}}>
+                {this.deduplicate()}
+              </div>
+            </Accordion.Body>
+           </Accordion.Item>
+        </Accordion>
+
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <AccordionHeader>
+              Matching Sequences (Threshold=1):
+            </AccordionHeader>
+            <Accordion.Body>
+              <div style={{color: 'black'}}>
+                {this.deduplicate(1)}
+              </div>
+            </Accordion.Body>
+           </Accordion.Item>
+        </Accordion>
+
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <AccordionHeader>
+              Matching Sequences (Threshold=2):
+            </AccordionHeader>
+            <Accordion.Body>
+              <div style={{color: 'black'}}>
+                {this.deduplicate(2)}
+              </div>
+            </Accordion.Body>
+           </Accordion.Item>
+        </Accordion>
+
     </div>
     )
   }
